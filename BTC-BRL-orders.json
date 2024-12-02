@@ -1,2 +1,0 @@
-INFO:__main__:Running in GitHub Actions mode.
-ERROR:__main__:Environment variables TAPI_ID and TAPI_SECRET must be set.
