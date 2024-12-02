@@ -107,8 +107,7 @@ Automate your investments using GitHub Actions. The workflow is set to run month
 
 3. **Customize Workflow (Optional)**
 
-    - Modify `.github/workflows/main.yml` to adjust the schedule or parameters.
-    - Refer to the [GitHub Actions Workflow](.github/workflows/automated_monthly_investment.yml) for more details.
+    - Modify [`.github/workflows/automated_monthly_investment.yml`](.github/workflows/automated_monthly_investment.yml) to adjust the schedule or parameters.
 
 ## Creating a Fully Automated Flow
 
