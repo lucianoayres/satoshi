@@ -9,21 +9,20 @@ jobs:
     run_script:
         runs-on: ubuntu-latest
         env:
-            # Use the defined environment variables here
-            SYMBOL: ${{ env.SYMBOL }}
-            CURRENCY: ${{ env.CURRENCY }}
-            COST: ${{ env.COST }}
+            SYMBOL: BTC
+            CURRENCY: BRL
+            COST: 100
         steps:
             - uses: actions/checkout@v3
             - name: Set up Python environment
               uses: actions/setup-python@v4
               with:
                   python-version: "3.x"
-            - name: Set environment variables (optional)
-              # This step is optional and can be removed if preferred
+            - name: Set up environment variables
               run: |
-                  echo "Using provided environment variables..."
+                  echo "TAPI_ID=${{ secrets.TAPI_ID }}" >> $GITHUB_ENV
+                  echo "TAPI_SECRET=${{ secrets.TAPI_SECRET }}" >> $GITHUB_ENV
             - name: Run the script
               run: |
                   cd src
-                  python main.py $SYMBOL $CURRENCY $COST
+                  python main.py ${{ env.SYMBOL }} ${{ env.CURRENCY }} ${{ env.COST }}
