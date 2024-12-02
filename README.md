@@ -57,15 +57,11 @@
         MERCADO_BITCOIN_API_SECRET=your_api_secret
         ```
 
+        - **IMPORTANT:** Add `.env` to `.gitignore` to protect your API keys from being exposed.
+
 ## Usage
 
-Run the application manually:
-
-```bash
-make run
-```
-
-Or directly execute the script:
+Execute the script:
 
 ```bash
 python src/main.py [SYMBOL] [CURRENCY] [COST]
