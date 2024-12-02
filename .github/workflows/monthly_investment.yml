@@ -1,0 +1,24 @@
+name: Monthly Script Execution
+
+on:
+    schedule:
+        - cron: "15 7 1 * *"
+    workflow_dispatch:
+
+jobs:
+    run_script:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - name: Set up Python environment
+              uses: actions/setup-python@v4
+              with:
+                  python-version: "3.x"
+            - name: Set up environment variables
+              run: |
+                  echo "TAPI_ID=${{ secrets.TAPI_ID }}" >> $GITHUB_ENV
+                  echo "TAPI_SECRET=${{ secrets.TAPI_SECRET }}" >> $GITHUB_ENV
+            - name: Run the script
+              run: |
+                  cd src
+                  python your_script.py BTC BRL 100
