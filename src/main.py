@@ -94,6 +94,7 @@ def place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost)
             order_status = order_details.get('status', '')
             if order_status == 'filled':
                 logger.info(f"Order {order_id} was successfully executed.")
+                logger.info(f"Order Details: {order_details}")
                 return order_details
             elif order_status == 'canceled':
                 logger.warning(f"Order {order_id} was canceled.")
@@ -134,5 +135,3 @@ def main():
 
 if __name__ == '__main__':
     result = main()
-    if result:
-        print(json.dumps(result))  # Output the result for the workflow to capture
