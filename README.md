@@ -12,11 +12,9 @@
 
 ## Features
 
--   📅 **Automated Monthly Investments**: Schedule your crypto purchases monthly.
+-   📅 **Flexible Investment Scheduling**: Customize your crypto purchase frequency.
 -   🔒 **Secure Authentication**: Utilizes Mercado Bitcoin's API securely.
 -   ⚙️ **Customizable Parameters**: Choose your crypto symbol, currency, and investment amount.
--   🛠️ **Easy Setup**: Simple installation with provided Makefile and requirements.
--   🔗 **Comprehensive Documentation**: Clear instructions and links to essential files for easy replication.
 -   🛡️ **User-Controlled Solution**: Fully managed by you without reliance on third-party services.
 
 ## Prerequisites
