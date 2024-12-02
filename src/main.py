@@ -90,7 +90,6 @@ def place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost)
     while True:
         order_details = get_order_info(access_token, account_id, base_quote, order_id)
         if order_details:
-            logger.info(f"Order details: {order_details}")
             order_status = order_details.get('status', '')
             if order_status == 'filled':
                 logger.info(f"Order {order_id} was successfully executed.")
