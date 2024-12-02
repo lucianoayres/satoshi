@@ -122,12 +122,12 @@ To create a seamless, fully automated investment process, follow these steps:
     - **Schedule Recurring PIX Transfers:**
         - Set up a recurring monthly PIX transfer to your Mercado Bitcoin account.
         - Ensure the transfer amount matches your investment parameters in the Satoshi project (e.g., BRL 100).
-        - Confirm the transfer details and schedule the date and time to align with the GitHub Actions workflow (e.g., a few minutes before the investment script runs).
+        - Confirm the transfer details and schedule the date and time to align with the GitHub Actions workflow (e.g., a day before the investment script runs).
 
 2. **Integrate PIX Transfers with Satoshi’s Automated Workflow**
 
     - **Synchronize Transfer Timing:**
-        - Schedule PIX transfers to occur a few minutes before the GitHub Actions workflow executes to ensure funds are available for investment.
+        - Schedule PIX transfers to occur a day before the GitHub Actions workflow executes to ensure funds are available for investment.
     - **Monitor Transactions:**
         - Regularly check both your bank app and Mercado Bitcoin account to ensure transfers and investments are processed successfully.
     - **Adjust Parameters as Needed:**
