@@ -40,6 +40,7 @@ jobs:
                   git config user.email "github-actions[bot]@users.noreply.github.com"
                   # Define the JSON file name
                   file_name="${SYMBOL}-${CURRENCY}-orders.json"
+                  mv "./src/${file_name}" "./${file_name}"
                   # Check if the file exists before committing
                   if [ -f "$file_name" ]; then
                       git add "$file_name"
