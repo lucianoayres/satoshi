@@ -120,12 +120,6 @@ Automate your investments using GitHub Actions. The workflow is set to run month
     make test
     ```
 
--   **Lint Code**
-
-    ```bash
-    make lint
-    ```
-
 -   **Build Package**
 
     ```bash
