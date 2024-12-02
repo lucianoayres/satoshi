@@ -51,9 +51,6 @@ Automate your monthly cryptocurrency investments on **Mercado Bitcoin** effortle
         ```ini
         MERCADO_BITCOIN_API_ID=your_api_id
         MERCADO_BITCOIN_API_SECRET=your_api_secret
-        SYMBOL=BTC
-        CURRENCY=BRL
-        COST=100
         ```
 
 ## Usage
