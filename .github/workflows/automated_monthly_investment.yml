@@ -27,6 +27,8 @@ jobs:
               run: |
                   cd src
                   python main.py $SYMBOL $CURRENCY $COST
+                  ls -la
+                  pwd
               env:
                   SYMBOL: ${{ vars.SYMBOL }}
                   CURRENCY: ${{ vars.CURRENCY }}
