@@ -1,7 +1,6 @@
 import os
 import logging
 import sys
-from dotenv import load_dotenv  # Import only when needed
 from api_utils import (
     authenticate,
     get_ticker_info,
@@ -22,6 +21,7 @@ def load_environment_variables(logger):
 
     if environment == 'development':
         try:
+            from dotenv import load_dotenv  # Import only when needed
             load_dotenv()
             logger.info('Loaded environment variables from .env file.')
         except ImportError:
