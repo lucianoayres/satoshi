@@ -29,7 +29,7 @@ setup:
 # Run the application
 SYMBOL := BTC
 CURRENCY := BRL
-COST := 100
+COST := 1
 
 .PHONY: run
 run:

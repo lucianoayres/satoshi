@@ -17,16 +17,14 @@ def configure_logging():
     return logger
 
 
-import os
-
 def load_environment_variables(logger):
     isGithubActionRunning = os.getenv('GITHUB_ACTIONS')
 
-    if isGithubActionRunning:  # Executes if running in GitHub Actions
+    if isGithubActionRunning:  
         logger.info('Running in GitHub Actions mode.')
-    else:  # Executes if not running in GitHub Actions
+    else: 
         try:
-            from dotenv import load_dotenv  # Import only when needed
+            from dotenv import load_dotenv  
             load_dotenv()
             logger.info('Loaded environment variables from .env file.')
         except ImportError:
@@ -84,12 +82,15 @@ def place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost)
 
     try:
         order_info = place_order(access_token, account_id, base_quote, order_payload)
-        logger.info(f"Order placed successfully. Order ID: {order_info['id']}")
+        if order_info is None:
+            logger.error("Order placement returned None.")
+            return
+        logger.info(f"Order placed successfully. Order ID: {order_info['orderId']}")
     except Exception as e:
         logger.error(f"Failed to place order: {e}")
         return
 
-    order_id = order_info['id']
+    order_id = order_info['orderId']
 
     while True:
         order_details = get_order_info(access_token, account_id, base_quote, order_id)
@@ -103,7 +104,7 @@ def place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost)
                 break
             else:
                 logger.info(f"Order {order_id} is still pending. Current status: {order_status}")
-                time.sleep(5)  # Adjust the sleep time as needed
+                time.sleep(5)  
         else:
             logger.error(f"Failed to retrieve order details for order {order_id}")
             break
@@ -112,17 +113,14 @@ def place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost)
 def main():
     logger = configure_logging()
 
-    # Load environment variables
     tapi_id, tapi_secret = load_environment_variables(logger)
     if not tapi_id or not tapi_secret:
         return
 
-    # Fetch and validate credentials
     access_token = fetch_and_validate_credentials(logger, tapi_id, tapi_secret)
     if not access_token:
         return
 
-    # Get arguments from command line
     if len(sys.argv) < 4:
         print("Usage: python src/main.py [crypto_symbol] [currency] [cost]")
         return
@@ -130,16 +128,14 @@ def main():
     crypto_symbol = sys.argv[1]
     currency = sys.argv[2]
     try:
-        cost = float(sys.argv[3])  # Convert cost to float (works for integers too)
+        cost = float(sys.argv[3])
         if cost <= 0:
             raise ValueError("Cost must be a positive number.")
     except ValueError as e:
         print(f"Invalid cost value: {e}")
         return
 
-    # Place and monitor the order
     place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost)
 
 if __name__ == '__main__':
-    import sys
     main()

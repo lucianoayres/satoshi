@@ -52,7 +52,7 @@ def place_order(access_token, account_id, base_quote, order_payload):
         'Authorization': f'Bearer {access_token}'
     }
     response = requests.post(place_order_url, headers=headers, json=order_payload)
-    if response.status_code == 201:
+    if response.status_code == 200:
         order_info = response.json()
         print('Order placed successfully:', order_info)
         return order_info

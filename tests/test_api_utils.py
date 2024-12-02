@@ -123,7 +123,7 @@ class TestApiUtils(unittest.TestCase):
         order_payload = {'type': 'buy', 'amount': 1, 'price': 50000}
         expected_order_info = {'order_id': 'order456', 'status': 'placed'}
         mock_response = Mock()
-        mock_response.status_code = 201
+        mock_response.status_code = 200
         mock_response.json.return_value = expected_order_info
         mock_post.return_value = mock_response
 
