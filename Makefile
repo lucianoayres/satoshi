@@ -23,9 +23,13 @@ setup:
 	. $(ACTIVATE) && pip install -r requirements.txt
 
 # Run the application
+SYMBOL := BTC
+CURRENCY := BRL
+COST := 100
+
 .PHONY: run
 run:
-	. $(ACTIVATE) && $(PYTHON) $(SRC_DIR)/main.py
+	. $(ACTIVATE) && $(PYTHON) $(SRC_DIR)/main.py $(SYMBOL) $(CURRENCY) $(COST)
 
 # Run tests
 .PHONY: test

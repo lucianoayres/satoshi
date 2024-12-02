@@ -1,7 +1,6 @@
-# src/main.py
-
 import os
 import logging
+import sys
 from dotenv import load_dotenv  # Import only when needed
 from api_utils import (
     authenticate,
@@ -53,8 +52,8 @@ def fetch_and_validate_credentials(logger):
     return access_token
 
 
-def place_and_monitor_order(logger, access_token):
-    base_quote = 'BTC-BRL'
+def place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost):
+    base_quote = f"{crypto_symbol}-{currency}"
     ticker_info = get_ticker_info(base_quote)
 
     account_id, account_info = get_account_info(access_token)
@@ -64,7 +63,7 @@ def place_and_monitor_order(logger, access_token):
     order_payload = {
         'type': 'market',
         'side': 'buy',
-        'cost': 1
+        'cost': cost
     }
 
     order_info = place_order(access_token, account_id, base_quote, order_payload)
@@ -88,12 +87,29 @@ def place_and_monitor_order(logger, access_token):
 def main():
     logger = configure_logging()
 
+    # Get arguments from command line
+    if len(sys.argv) < 2:
+        print("Usage: python src/main.py [crypto_symbol] [currency] cost")
+        print("Default crypto symbol: BTC")
+        print("Default currency: BRL")
+        return
+
+    crypto_symbol = sys.argv[1] if len(sys.argv) >= 2 else 'BTC'
+    currency = sys.argv[2] if len(sys.argv) >= 3 else 'BRL'
+
+    if len(sys.argv) < 3:
+        print("Cost is a required argument.")
+        return
+
+    cost = float(sys.argv[3])  # Convert cost to float
+
     access_token = fetch_and_validate_credentials(logger)
     if not access_token:
         return
 
-    place_and_monitor_order(logger, access_token)
+    place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost)
 
 
 if __name__ == '__main__':
+    import sys
     main()
