@@ -43,7 +43,6 @@ def get_account_info(access_token):
     if response.status_code == 200:
         account_info = response.json()
         account_id = account_info[0]['id']
-        print('Account ID retrieved successfully:', account_id)
         return account_id, account_info
     else:
         print('Failed to retrieve account information:', response.status_code, response.text)
