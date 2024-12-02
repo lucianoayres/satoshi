@@ -187,19 +187,3 @@ This project is licensed under the [MIT License](LICENSE). 📄
 ## Disclaimer
 
 **Satoshi** is an independent project developed and maintained by the community. It is **not affiliated with or endorsed by Mercado Bitcoin**. All operations are conducted under your control, and you are responsible for managing your API credentials and ensuring the security of your investments. Use this tool at your own risk.
-
----
-
-_**Happy Investing!**_
-
-## Quick Links
-
--   [Main Script](src/main.py)
--   [Configuration File](src/config.py)
--   [Environment Variables Example](.env.example)
--   [GitHub Actions Workflow](.github/workflows/main.yml)
--   [Makefile](Makefile)
--   [Usage Guide](docs/usage.md)
--   [Contributing Guidelines](CONTRIBUTING.md)
--   [License](LICENSE)
--   [Satoshi Banner Image](images/satoshi_banner_optimized.png)
