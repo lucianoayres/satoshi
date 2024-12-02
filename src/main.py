@@ -58,7 +58,7 @@ def place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost)
     base_quote = f"{crypto_symbol}-{currency}"
     try:
         ticker_info = get_ticker_info(base_quote)
-        print('Ticker info retrieved successfully:', ticker_info)
+        logger.info(f"Ticker info retrieved successfully: {ticker_info}")
         logger.info(f"Retrieved ticker info for {base_quote}")
     except Exception as e:
         logger.error(f"Failed to retrieve ticker info: {e}")
@@ -90,7 +90,7 @@ def place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost)
     while True:
         order_details = get_order_info(access_token, account_id, base_quote, order_id)
         if order_details:
-            print('Order placed successfully:',order_details)
+            logger.info(f"Order details: {order_details}")
             order_status = order_details.get('status', '')
             if order_status == 'filled':
                 logger.info(f"Order {order_id} was successfully executed.")
