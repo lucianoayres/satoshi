@@ -6,17 +6,7 @@
 
 ## Table of Contents
 
--   [Features](#features)
--   [Prerequisites](#prerequisites)
--   [Installation](#installation)
--   [Usage](#usage)
--   [Automation with GitHub Actions](#automation-with-github-actions)
--   [Creating a Fully Automated Flow](#creating-a-fully-automated-flow)
--   [Makefile Commands](#makefile-commands)
--   [Contributing](#contributing)
--   [License](#license)
--   [Disclaimer](#disclaimer)
--   [Quick Links](#quick-links)
+[Features](#features) · [Prerequisites](#prerequisites) · [Installation](#installation) · [Usage](#usage) · [Automation with GitHub Actions](#automation-with-github-actions) · [Creating a Fully Automated Flow](#creating-a-fully-automated-flow) · [Makefile Commands](#makefile-commands) · [Contributing](#contributing) · [License](#license) · [Disclaimer](#disclaimer)
 
 ## Features
 
