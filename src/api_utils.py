@@ -1,5 +1,3 @@
-# src/api_utils.py
-
 import requests
 
 base_url = 'https://api.mercadobitcoin.net/api/v4'
