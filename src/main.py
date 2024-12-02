@@ -2,6 +2,7 @@ import os
 import time
 import logging
 import sys
+import json
 from api_utils import (
     authenticate,
     get_ticker_info,
@@ -59,15 +60,14 @@ def place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost)
     try:
         ticker_info = get_ticker_info(base_quote)
         logger.info(f"Ticker info retrieved successfully: {ticker_info}")
-        logger.info(f"Retrieved ticker info for {base_quote}")
     except Exception as e:
         logger.error(f"Failed to retrieve ticker info: {e}")
-        return
+        return None
 
     account_id, account_info = get_account_info(access_token)
     if not account_id:
         logger.error("Failed to get account info.")
-        return
+        return None
 
     order_payload = {
         'type': 'market',
@@ -79,11 +79,11 @@ def place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost)
         order_info = place_order(access_token, account_id, base_quote, order_payload)
         if order_info is None:
             logger.error("Order placement returned None.")
-            return
+            return None
         logger.info(f"Order placed successfully. Order ID: {order_info['orderId']}")
     except Exception as e:
         logger.error(f"Failed to place order: {e}")
-        return
+        return None
 
     order_id = order_info['orderId']
 
@@ -94,32 +94,31 @@ def place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost)
             order_status = order_details.get('status', '')
             if order_status == 'filled':
                 logger.info(f"Order {order_id} was successfully executed.")
-                break
+                return order_details
             elif order_status == 'canceled':
                 logger.warning(f"Order {order_id} was canceled.")
-                break
+                return None
             else:
                 logger.info(f"Order {order_id} is still pending. Current status: {order_status}")
-                time.sleep(5)  
+                time.sleep(5)
         else:
             logger.error(f"Failed to retrieve order details for order {order_id}")
-            break
-
+            return None
 
 def main():
     logger = configure_logging()
 
     tapi_id, tapi_secret = load_environment_variables(logger)
     if not tapi_id or not tapi_secret:
-        return
+        return None
 
     access_token = fetch_and_validate_credentials(logger, tapi_id, tapi_secret)
     if not access_token:
-        return
+        return None
 
     if len(sys.argv) < 4:
         print("Usage: python src/main.py [crypto_symbol] [currency] [cost]")
-        return
+        return None
 
     crypto_symbol = sys.argv[1]
     currency = sys.argv[2]
@@ -129,9 +128,11 @@ def main():
             raise ValueError("Cost must be a positive number.")
     except ValueError as e:
         print(f"Invalid cost value: {e}")
-        return
+        return None
 
-    place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost)
+    return place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost)
 
 if __name__ == '__main__':
-    main()
+    result = main()
+    if result:
+        print(json.dumps(result))  # Output the result for the workflow to capture
