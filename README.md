@@ -79,7 +79,7 @@ python src/main.py BTC BRL 100
 
 ## Automation with GitHub Actions
 
-Automate your investments using GitHub Actions. The workflow is set to run monthly at 7:15 AM UTC on the 1st.
+Automate your investments using GitHub Actions. The [workflow](.github/workflows/automated_monthly_investment.yml) is set to run monthly at 7:15 AM UTC on the 1st.
 
 1. **Add Secrets to GitHub Repository**
 
