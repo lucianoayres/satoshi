@@ -94,14 +94,6 @@ def place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost)
             order_status = order_details.get('status', '')
             if order_status == 'filled':
                 logger.info(f"Order {order_id} was successfully executed.")
-                file_name = f"{crypto_symbol}-{currency}-orders.json"
-                try:
-                    with open(file_name, 'w') as json_file:
-                        json.dump(order_details, json_file, indent=4)
-                    logger.info(f"Order details saved to {file_name}.")
-                except Exception as e:
-                    logger.error(f"Failed to write order details to {file_name}: {e}")
-                    return None
                 return order_details
             elif order_status == 'canceled':
                 logger.warning(f"Order {order_id} was canceled.")
@@ -143,4 +135,4 @@ def main():
 if __name__ == '__main__':
     result = main()
     if result:
-        print(json.dumps(result))
+        print(json.dumps(result))  # Output the result for the workflow to capture
