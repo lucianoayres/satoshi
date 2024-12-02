@@ -13,30 +13,36 @@ from api_utils import (
 
 
 def configure_logging():
-    logging.basicConfig(level=logging.INFO)
+    is_github_action = os.getenv('GITHUB_ACTIONS', 'false').lower() == 'true'
+    if not is_github_action:
+        # Enable detailed logging for local development
+        logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+    else:
+        # Suppress INFO logs in GitHub Actions
+        logging.basicConfig(level=logging.WARNING, format='%(asctime)s - %(levelname)s - %(message)s')
     logger = logging.getLogger(__name__)
     return logger
 
 
 def load_environment_variables(logger):
-    isGithubActionRunning = os.getenv('GITHUB_ACTIONS')
+    is_github_action = os.getenv('GITHUB_ACTIONS', 'false').lower() == 'true'
 
-    if isGithubActionRunning:  
+    if is_github_action:
         logger.info('Running in GitHub Actions mode.')
-    else: 
+    else:
         try:
-            from dotenv import load_dotenv  
+            from dotenv import load_dotenv
             load_dotenv()
             logger.info('Loaded environment variables from .env file.')
         except ImportError:
             logger.error('Failed to import python-dotenv. Install it with "pip install python-dotenv" for development.')
             return None, None
-    
+
     tapi_id = os.getenv('MERCADO_BITCOIN_API_ID')
     tapi_secret = os.getenv('MERCADO_BITCOIN_API_SECRET')
 
     if not tapi_id or not tapi_secret:
-        logger.error("Environment variables TAPI_ID and TAPI_SECRET must be set.")
+        logger.error("Environment variables MERCADO_BITCOIN_API_ID and MERCADO_BITCOIN_API_SECRET must be set.")
         return None, None
 
     logger.info("Loaded environment variables successfully.")
@@ -105,6 +111,7 @@ def place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost)
             logger.error(f"Failed to retrieve order details for order {order_id}")
             return None
 
+
 def main():
     logger = configure_logging()
 
@@ -131,6 +138,7 @@ def main():
         return None
 
     return place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost)
+
 
 if __name__ == '__main__':
     result = main()
