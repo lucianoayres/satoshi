@@ -19,6 +19,8 @@ def configure_logging():
 def load_environment_variables(logger):
     environment = os.getenv('ENVIRONMENT', 'development')
 
+    print(environment)
+
     if environment == 'development':
         try:
             from dotenv import load_dotenv  # Import only when needed
