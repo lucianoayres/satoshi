@@ -23,12 +23,6 @@ jobs:
               run: |
                   echo "MERCADO_BITCOIN_API_ID=${{ secrets.MERCADO_BITCOIN_API_ID }}" >> $GITHUB_ENV
                   echo "MERCADO_BITCOIN_API_SECRET=${{ secrets.MERCADO_BITCOIN_API_SECRET }}" >> $GITHUB_ENV
-            - name: Debug environment variables
-              run: printenv | grep -E "SYMBOL|CURRENCY|COST"
-              env:
-                  SYMBOL: ${{ vars.SYMBOL }}
-                  CURRENCY: ${{ vars.CURRENCY }}
-                  COST: ${{ vars.COST }}
             - name: Run the script
               run: |
                   cd src
