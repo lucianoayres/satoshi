@@ -21,8 +21,8 @@ jobs:
                   pip install -r requirements.txt
             - name: Set up environment variables
               run: |
-                  echo "TAPI_ID=${{ secrets.TAPI_ID }}" >> $GITHUB_ENV
-                  echo "TAPI_SECRET=${{ secrets.TAPI_SECRET }}" >> $GITHUB_ENV
+                  echo "MERCADO_BITCOIN_API_ID=${{ secrets.MERCADO_BITCOIN_API_ID }}" >> $GITHUB_ENV
+                  echo "MERCADO_BITCOIN_API_SECRET=${{ secrets.MERCADO_BITCOIN_API_SECRET }}" >> $GITHUB_ENV
             - name: Run the script
               run: |
                   cd src

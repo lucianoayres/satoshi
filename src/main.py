@@ -17,12 +17,14 @@ def configure_logging():
     return logger
 
 
+import os
+
 def load_environment_variables(logger):
-    environment = os.getenv('ENVIRONMENT', 'development')
+    isGithubActionRunning = os.getenv('GITHUB_ACTIONS')
 
-    print(f"Environment: {environment}")
-
-    if environment == 'development':
+    if isGithubActionRunning:  # Executes if running in GitHub Actions
+        logger.info('Running in GitHub Actions mode.')
+    else:  # Executes if not running in GitHub Actions
         try:
             from dotenv import load_dotenv  # Import only when needed
             load_dotenv()
@@ -30,11 +32,15 @@ def load_environment_variables(logger):
         except ImportError:
             logger.error('Failed to import python-dotenv. Install it with "pip install python-dotenv" for development.')
             return None, None
-    else:
-        logger.info('Running in production mode.')
 
-    tapi_id = os.getenv('TAPI_ID')
-    tapi_secret = os.getenv('TAPI_SECRET')
+    symbol = os.getenv('SYMBOL')
+    currency = os.getenv('CURRENCY')
+    cost = os.getenv('COST')
+
+    print(f"Symbol: {symbol}, Currency: {currency}, Cost: {cost}")
+    
+    tapi_id = os.getenv('MERCADO_BITCOIN_API_ID')
+    tapi_secret = os.getenv('MERCADO_BITCOIN_API_SECRET')
 
     if not tapi_id or not tapi_secret:
         logger.error("Environment variables TAPI_ID and TAPI_SECRET must be set.")
