@@ -112,34 +112,32 @@ def place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost)
 def main():
     logger = configure_logging()
 
+    # Load environment variables
     tapi_id, tapi_secret = load_environment_variables(logger)
     if not tapi_id or not tapi_secret:
         return
 
+    # Fetch and validate credentials
     access_token = fetch_and_validate_credentials(logger, tapi_id, tapi_secret)
     if not access_token:
         return
 
     # Get arguments from command line
-    if len(sys.argv) < 2:
-        print("Usage: python src/main.py [crypto_symbol] [currency] cost")
-        print("Default crypto symbol: BTC")
-        print("Default currency: BRL")
+    if len(sys.argv) < 4:
+        print("Usage: python src/main.py [crypto_symbol] [currency] [cost]")
         return
 
-    crypto_symbol = sys.argv[1] if len(sys.argv) >= 2 else 'BTC'
-    currency = sys.argv[2] if len(sys.argv) >= 3 else 'BRL'
-
-    if len(sys.argv) < 3:
-        print("Cost is a required argument.")
+    crypto_symbol = sys.argv[1]
+    currency = sys.argv[2]
+    try:
+        cost = float(sys.argv[3])  # Convert cost to float (works for integers too)
+        if cost <= 0:
+            raise ValueError("Cost must be a positive number.")
+    except ValueError as e:
+        print(f"Invalid cost value: {e}")
         return
 
-    cost = float(sys.argv[3])  # Convert cost to float
-
-    access_token = fetch_and_validate_credentials(logger, tapi_id, tapi_secret)
-    if not access_token:
-        return
-
+    # Place and monitor the order
     place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost)
 
 if __name__ == '__main__':
