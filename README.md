@@ -2,11 +2,13 @@
 
 ![Satoshi Banner](https://github.com/lucianoayres/satoshi/blob/main/images/satoshi_banner_optimized.png?raw=true)
 
-**Satoshi** automates your monthly cryptocurrency investments on **Mercado Bitcoin**, making it effortless to grow your crypto portfolio with scheduled PIX transfers. This solution is entirely under your control, relying solely on your own setup without dependency on third-party applications. Please note that Satoshi is **not an official application** of Mercado Bitcoin.
-
-## Table of Contents
+## Take Full Control of Your Automated Crypto Investments
 
 [Features](#features) · [Prerequisites](#prerequisites) · [Installation](#installation) · [Usage](#usage) · [Automation with GitHub Actions](#automation-with-github-actions) · [Creating a Fully Automated Flow](#creating-a-fully-automated-flow) · [Makefile Commands](#makefile-commands) · [Contributing](#contributing) · [License](#license) · [Disclaimer](#disclaimer)
+
+## What's Satoshi?
+
+**Satoshi** automates your monthly cryptocurrency investments on **Mercado Bitcoin**, making it effortless to grow your crypto portfolio with scheduled PIX transfers. This solution is entirely under your control, relying solely on your own setup without dependency on third-party applications. Please note that Satoshi is **not an official application** of Mercado Bitcoin.
 
 ## Features
 
