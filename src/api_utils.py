@@ -53,7 +53,6 @@ def place_order(access_token, account_id, base_quote, order_payload):
     response = requests.post(place_order_url, headers=headers, json=order_payload)
     if response.status_code == 200:
         order_info = response.json()
-        print('Order placed successfully:', order_info)
         return order_info
     else:
         print('Failed to place order:', response.status_code, response.text)
@@ -67,7 +66,6 @@ def get_order_info(access_token, account_id, base_quote, order_id):
     response = requests.get(get_order_url, headers=headers)
     if response.status_code == 200:
         order_info = response.json()
-        print('Order Information:', order_info)
         return order_info
     else:
         print('Failed to retrieve order information:', response.status_code, response.text)
