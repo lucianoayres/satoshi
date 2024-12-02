@@ -53,3 +53,4 @@ clean:
 	find . -type f -name "*.pyc" -delete
 	rm -rf .pytest_cache
 	rm -rf .coverage htmlcov/
+	rm -rf ./src/satoshi.egg-info
