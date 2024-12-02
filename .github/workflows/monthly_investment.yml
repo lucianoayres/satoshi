@@ -8,16 +8,17 @@ on:
 jobs:
     run_script:
         runs-on: ubuntu-latest
-        env:
-            SYMBOL: BTC
-            CURRENCY: BRL
-            COST: 100
         steps:
             - uses: actions/checkout@v3
             - name: Set up Python environment
               uses: actions/setup-python@v4
               with:
                   python-version: "3.x"
+                  cache: "pip"
+                  cache-dependency-path: requirements.txt
+            - name: Install dependencies
+              run: |
+                  pip install -r requirements.txt 1
             - name: Set up environment variables
               run: |
                   echo "TAPI_ID=${{ secrets.TAPI_ID }}" >> $GITHUB_ENV
