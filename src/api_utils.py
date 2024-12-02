@@ -26,7 +26,6 @@ def get_ticker_info(base_quote):
     response = requests.get(tickers_url)
     if response.status_code == 200:
         ticker_info = response.json()
-        print('Ticker info retrieved successfully:', ticker_info)
         return ticker_info
     else:
         print('Failed to retrieve ticker information:', response.status_code, response.text)

@@ -30,12 +30,6 @@ def load_environment_variables(logger):
         except ImportError:
             logger.error('Failed to import python-dotenv. Install it with "pip install python-dotenv" for development.')
             return None, None
-
-    symbol = os.getenv('SYMBOL')
-    currency = os.getenv('CURRENCY')
-    cost = os.getenv('COST')
-
-    print(f"Symbol: {symbol}, Currency: {currency}, Cost: {cost}")
     
     tapi_id = os.getenv('MERCADO_BITCOIN_API_ID')
     tapi_secret = os.getenv('MERCADO_BITCOIN_API_SECRET')
@@ -60,10 +54,11 @@ def fetch_and_validate_credentials(logger, tapi_id, tapi_secret):
 
 
 def place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost):
-    logger.info(f"Placing order for {cost} {currency} of {crypto_symbol}")
+    logger.info(f"Placing order for {cost} {currency} of {crypto_symbol} in {currency}")
     base_quote = f"{crypto_symbol}-{currency}"
     try:
         ticker_info = get_ticker_info(base_quote)
+        print('Ticker info retrieved successfully:', ticker_info)
         logger.info(f"Retrieved ticker info for {base_quote}")
     except Exception as e:
         logger.error(f"Failed to retrieve ticker info: {e}")
@@ -95,6 +90,7 @@ def place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost)
     while True:
         order_details = get_order_info(access_token, account_id, base_quote, order_id)
         if order_details:
+            print('Order placed successfully:',order_details)
             order_status = order_details.get('status', '')
             if order_status == 'filled':
                 logger.info(f"Order {order_id} was successfully executed.")
