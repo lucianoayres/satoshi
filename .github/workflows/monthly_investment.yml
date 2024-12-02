@@ -18,7 +18,7 @@ jobs:
                   cache-dependency-path: requirements.txt
             - name: Install dependencies
               run: |
-                  pip install -r requirements.txt 1
+                  pip install -r requirements.txt
             - name: Set up environment variables
               run: |
                   echo "TAPI_ID=${{ secrets.TAPI_ID }}" >> $GITHUB_ENV
