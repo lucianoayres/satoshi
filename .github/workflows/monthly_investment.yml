@@ -27,3 +27,7 @@ jobs:
               run: |
                   cd src
                   python main.py ${{ env.SYMBOL }} ${{ env.CURRENCY }} ${{ env.COST }}
+              env:
+                  SYMBOL: ${{ secrets.SYMBOL }}
+                  CURRENCY: ${{ secrets.CURRENCY }}
+                  COST: ${{ secrets.COST }}
