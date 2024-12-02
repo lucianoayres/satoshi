@@ -1,4 +1,4 @@
-# ₿⚡ Satoshi
+# ⚡₿ Satoshi
 
 ![Satoshi Banner](https://github.com/lucianoayres/satoshi/blob/main/images/satoshi_banner_optimized.png?raw=true)
 
