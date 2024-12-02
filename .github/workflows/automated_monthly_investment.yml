@@ -46,3 +46,7 @@ jobs:
                   else
                       echo "JSON file $file_name not found. No changes to commit."
                   fi
+              env:
+                  SYMBOL: ${{ vars.SYMBOL }}
+                  CURRENCY: ${{ vars.CURRENCY }}
+                  COST: ${{ vars.COST }}
