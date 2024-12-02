@@ -2,7 +2,7 @@
 
 ![Satoshi Banner](https://github.com/lucianoayres/satoshi/blob/main/images/satoshi_banner_optimized.png?raw=true)
 
-## Automate your monthly cryptocurrency investments on **Mercado Bitcoin** effortlessly! 💰
+Automate your monthly cryptocurrency investments on **Mercado Bitcoin** effortlessly! 💰
 
 ## Table of Contents
 
