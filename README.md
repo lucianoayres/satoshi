@@ -112,7 +112,7 @@ Automate your investments using GitHub Actions. The workflow is set to run month
 
 ## Creating a Fully Automated Flow
 
-To create a seamless, fully automated investment process that includes scheduling PIX transfers from your bank app to your Mercado Bitcoin account alongside the automated investment workflow in this project, follow these steps:
+To create a seamless, fully automated investment process, follow these steps:
 
 1. **Set Up PIX Transfer Scheduling in Your Bank App**
 
