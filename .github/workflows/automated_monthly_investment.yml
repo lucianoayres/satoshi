@@ -10,45 +10,24 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
-
             - name: Set up Python environment
               uses: actions/setup-python@v4
               with:
                   python-version: "3.x"
                   cache: "pip"
                   cache-dependency-path: requirements.txt
-
             - name: Install dependencies
               run: |
                   pip install -r requirements.txt
-
-            - name: Run the script and capture output
-              id: run_script
+            - name: Set up environment variables
               run: |
-                  set -e
-                  output=$(python src/main.py $SYMBOL $CURRENCY $COST 2>&1)
-                  file_name="${SYMBOL}-${CURRENCY}-orders.json"
-                  echo "$output" > "$file_name"
-                  echo "file_name=$file_name" >> $GITHUB_ENV
+                  echo "MERCADO_BITCOIN_API_ID=${{ secrets.MERCADO_BITCOIN_API_ID }}" >> $GITHUB_ENV
+                  echo "MERCADO_BITCOIN_API_SECRET=${{ secrets.MERCADO_BITCOIN_API_SECRET }}" >> $GITHUB_ENV
+            - name: Run the script
+              run: |
+                  cd src
+                  python main.py $SYMBOL $CURRENCY $COST
               env:
                   SYMBOL: ${{ vars.SYMBOL }}
                   CURRENCY: ${{ vars.CURRENCY }}
                   COST: ${{ vars.COST }}
-              continue-on-error: true # Allow workflow to continue even if this step fails
-
-            - name: Handle Script Failure
-              if: failure()
-              run: |
-                  echo "The script failed. Logging the error output."
-                  echo "Error Output:"
-                  cat "${{ env.file_name }}" || echo "No output captured."
-                  exit 1  # Ensure the workflow fails
-
-            - name: Commit and Push JSON File
-              if: success()
-              run: |
-                  git config user.name "github-actions[bot]"
-                  git config user.email "github-actions[bot]@users.noreply.github.com"
-                  git add "${{ env.file_name }}"  # Use env.file_name set earlier
-                  git commit -m "Add order details for ${{ vars.SYMBOL }}-${{ vars.CURRENCY }}"
-                  git push origin main
