@@ -8,7 +8,7 @@
 
 ## What's Satoshi?
 
-**Satoshi** automates your monthly cryptocurrency investments on **Mercado Bitcoin**, making it effortless to grow your crypto portfolio with scheduled PIX transfers. This solution is entirely under your control, relying solely on your own setup without dependency on third-party applications. Please note that Satoshi is **not an official application** of Mercado Bitcoin.
+**Satoshi** is a crypto-bot that automates your monthly cryptocurrency investments on **Mercado Bitcoin**, making it effortless to grow your crypto portfolio with scheduled PIX transfers. This solution is entirely under your control, relying solely on your own setup without dependency on third-party applications. Please note that Satoshi is **not an official application** of Mercado Bitcoin.
 
 ## Features
 
