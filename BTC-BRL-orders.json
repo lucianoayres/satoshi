@@ -1,0 +1,28 @@
+{
+    "id": "01JE47MBNF2ERBADN1FH4SC4RT",
+    "instrument": "BTC-BRL",
+    "fee": "0.00000001",
+    "qty": "0.00000000",
+    "side": "buy",
+    "type": "market",
+    "filledQty": "0.00000172",
+    "avgPrice": 578565.23766684,
+    "limitPrice": 0,
+    "cost": 1,
+    "triggerOrderId": "1262767887",
+    "status": "filled",
+    "executions": [
+        {
+            "id": "27981739",
+            "instrument": "BTC-BRL",
+            "price": 578565.23766684,
+            "qty": "0.00000172",
+            "side": "buy",
+            "fee_rate": "0.70000000",
+            "executed_at": 1733161529,
+            "liquidity": "taker"
+        }
+    ],
+    "created_at": 1733161529,
+    "updated_at": 1733161529
+}
