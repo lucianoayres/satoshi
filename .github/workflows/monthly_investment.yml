@@ -23,11 +23,17 @@ jobs:
               run: |
                   echo "MERCADO_BITCOIN_API_ID=${{ secrets.MERCADO_BITCOIN_API_ID }}" >> $GITHUB_ENV
                   echo "MERCADO_BITCOIN_API_SECRET=${{ secrets.MERCADO_BITCOIN_API_SECRET }}" >> $GITHUB_ENV
+            - name: Debug environment variables
+              run: printenv | grep -E "SYMBOL|CURRENCY|COST"
+              env:
+                  SYMBOL: ${{ vars.SYMBOL }}
+                  CURRENCY: ${{ vars.CURRENCY }}
+                  COST: ${{ vars.COST }}
             - name: Run the script
               run: |
                   cd src
-                  python main.py ${{ env.SYMBOL }} ${{ env.CURRENCY }} ${{ env.COST }}
+                  python main.py $SYMBOL $CURRENCY $COST
               env:
-                  SYMBOL: ${{ secrets.SYMBOL }}
-                  CURRENCY: ${{ secrets.CURRENCY }}
-                  COST: ${{ secrets.COST }}
+                  SYMBOL: ${{ vars.SYMBOL }}
+                  CURRENCY: ${{ vars.CURRENCY }}
+                  COST: ${{ vars.COST }}
