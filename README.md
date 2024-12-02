@@ -4,7 +4,7 @@
 
 ## Take Full Control of Your Automated Crypto Investments
 
-[Features](#features) · [Prerequisites](#prerequisites) · [Installation](#installation) · [Usage](#usage) · [Automation with GitHub Actions](#automation-with-github-actions) · [Creating a Fully Automated Flow](#creating-a-fully-automated-flow) · [Makefile Commands](#makefile-commands) · [Contributing](#contributing) · [License](#license) · [Disclaimer](#disclaimer)
+[Features](#features) · [Prerequisites](#prerequisites) · [Installation](#installation) · [Usage](#usage) · [Automation with GitHub Actions](#automation-with-github-actions) · [Creating a Fully Automated Flow](#creating-a-fully-automated-flow) · [Contributing](#contributing) · [License](#license) · [Disclaimer](#disclaimer)
 
 ## What's Satoshi?
 
@@ -117,38 +117,6 @@ To create a seamless, fully automated investment process, follow these steps:
     - Enable transaction notifications, securely store API credentials, and perform test runs to confirm the automated system works smoothly.
 
 This setup allows Satoshi to automatically invest your monthly funds, growing your crypto portfolio effortlessly.
-
-## Makefile Commands
-
--   **Setup Environment**
-
-    ```bash
-    make setup
-    ```
-
--   **Run Application**
-
-    ```bash
-    make run
-    ```
-
--   **Run Tests**
-
-    ```bash
-    make test
-    ```
-
--   **Build Package**
-
-    ```bash
-    make build
-    ```
-
--   **Clean Environment**
-
-    ```bash
-    make clean
-    ```
 
 ## Contributing
 
