@@ -25,8 +25,25 @@ jobs:
                   echo "MERCADO_BITCOIN_API_SECRET=${{ secrets.MERCADO_BITCOIN_API_SECRET }}" >> $GITHUB_ENV
             - name: Run the script
               run: |
-                  cd src
-                  python main.py $SYMBOL $CURRENCY $COST
+                  python ./src/main.py $SYMBOL $CURRENCY $COST
+              env:
+                  SYMBOL: ${{ vars.SYMBOL }}
+                  CURRENCY: ${{ vars.CURRENCY }}
+                  COST: ${{ vars.COST }}
+            - name: Commit and Push JSON File
+              if: success()
+              run: |
+                  git config user.name "github-actions[bot]"
+                  git config user.email "github-actions[bot]@users.noreply.github.com"
+                  file_name="${SYMBOL}-${CURRENCY}-orders.json"
+                  file_path="./data/${file_name}"
+
+                  if [ -f "$file_path" ]; then
+                    git add "$file_path"
+                    git commit -m "Add order details for ${{ vars.SYMBOL }}-${{ vars.CURRENCY }}"
+                    git push origin main
+                  else
+                    echo "JSON file $file_path not found. No changes to commit."
               env:
                   SYMBOL: ${{ vars.SYMBOL }}
                   CURRENCY: ${{ vars.CURRENCY }}

@@ -1,92 +1,59 @@
-import os
 import time
-import logging
 import sys
-import json
 from api_utils import (
-    authenticate,
+    fetch_and_validate_credentials,
+    save_order_to_file,
+    configure_logging,
+    load_environment_variables,
     get_ticker_info,
     get_account_info,
     place_order,
-    get_order_info
+    get_order_info,
+    format_buy_register
 )
 
 
-def configure_logging():
-    logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger(__name__)
-    return logger
-
-
-def load_environment_variables(logger):
-    isGithubActionRunning = os.getenv('GITHUB_ACTIONS')
-
-    if isGithubActionRunning:  
-        logger.info('Running in GitHub Actions mode.')
-    else: 
-        try:
-            from dotenv import load_dotenv  
-            load_dotenv()
-            logger.info('Loaded environment variables from .env file.')
-        except ImportError:
-            logger.error('Failed to import python-dotenv. Install it with "pip install python-dotenv" for development.')
-            return None, None
-    
-    tapi_id = os.getenv('MERCADO_BITCOIN_API_ID')
-    tapi_secret = os.getenv('MERCADO_BITCOIN_API_SECRET')
-
-    if not tapi_id or not tapi_secret:
-        logger.error("Environment variables TAPI_ID and TAPI_SECRET must be set.")
-        return None, None
-
-    logger.info("Loaded environment variables successfully.")
-    return tapi_id, tapi_secret
-
-
-def fetch_and_validate_credentials(logger, tapi_id, tapi_secret):
-    logger.info("Fetching and validating credentials...")
-    access_token = authenticate(tapi_id, tapi_secret)
-    if not access_token:
-        logger.error("Failed to authenticate. Please check your API credentials.")
-        return None
-
-    logger.info("Authentication successful.")
-    return access_token
-
-
-def place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost):
-    logger.info(f"Placing order for {cost} {currency} of {crypto_symbol} in {currency}")
-    base_quote = f"{crypto_symbol}-{currency}"
+def get_ticker(logger, base_quote):
+    """Retrieve ticker information for the given base quote."""
     try:
         ticker_info = get_ticker_info(base_quote)
         logger.info(f"Ticker info retrieved successfully: {ticker_info}")
+        return ticker_info
     except Exception as e:
         logger.error(f"Failed to retrieve ticker info: {e}")
         return None
 
+
+def get_account(logger, access_token):
+    """Retrieve account information using the access token."""
     account_id, account_info = get_account_info(access_token)
     if not account_id:
         logger.error("Failed to get account info.")
-        return None
+        return None, None
+    return account_id, account_info
 
+
+def place_market_order(logger, access_token, account_id, base_quote, cost):
+    """Place a market order."""
     order_payload = {
         'type': 'market',
         'side': 'buy',
         'cost': cost
     }
-
     try:
         order_info = place_order(access_token, account_id, base_quote, order_payload)
         if order_info is None:
             logger.error("Order placement returned None.")
             return None
         logger.info(f"Order placed successfully. Order ID: {order_info['orderId']}")
+        return order_info['orderId']
     except Exception as e:
         logger.error(f"Failed to place order: {e}")
         return None
 
-    order_id = order_info['orderId']
 
+def monitor_order(logger, access_token, account_id, base_quote, order_id):
+    """Monitor the order until it is filled or canceled."""
     while True:
         order_details = get_order_info(access_token, account_id, base_quote, order_id)
         if order_details:
@@ -104,6 +71,31 @@ def place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost)
         else:
             logger.error(f"Failed to retrieve order details for order {order_id}")
             return None
+
+
+def place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost, output_dir='./data'):
+    """Main function to place and monitor an order."""
+    base_quote = f"{crypto_symbol}-{currency}"
+    
+    ticker_info = get_ticker(logger, base_quote)
+    if not ticker_info:
+        return None
+
+    account_id, account_info = get_account(logger, access_token)
+    if not account_id:
+        return None
+
+    order_id = place_market_order(logger, access_token, account_id, base_quote, cost)
+    if not order_id:
+        return None
+
+    order_details = monitor_order(logger, access_token, account_id, base_quote, order_id)
+    if order_details:
+        formatted_order_details = format_buy_register(order_details)
+        save_order_to_file(formatted_order_details, crypto_symbol, currency, output_dir)
+        return order_details
+    return None
+
 
 def main():
     logger = configure_logging()
@@ -131,6 +123,7 @@ def main():
         return None
 
     return place_and_monitor_order(logger, access_token, crypto_symbol, currency, cost)
+
 
 if __name__ == '__main__':
     result = main()
