@@ -4,7 +4,7 @@
 
 ## Take Full Control of Your Automated Crypto Investments
 
-[Features](#features) · [Prerequisites](#prerequisites) · [Installation](#installation) · [Usage](#usage) · [Automation with GitHub Actions](#automation-with-github-actions) · [Creating a Fully Automated Flow](#creating-a-fully-automated-flow) · [Contributing](#contributing) · [License](#license) · [Disclaimer](#disclaimer)
+[Features](#features) · [Prerequisites](#prerequisites) · [Installation](#installation) · [Usage](#usage) · [Order Details Storage](#order-details-storage) · [Automation with GitHub Actions](#automation-with-github-actions) · [Creating a Fully Automated Flow](#creating-a-fully-automated-flow) · [Contributing](#contributing) · [License](#license) · [Disclaimer](#disclaimer)
 
 ## What's Satoshi?
 
@@ -74,6 +74,32 @@ python src/main.py [SYMBOL] [CURRENCY] [COST]
 ```bash
 python src/main.py BTC BRL 100
 ```
+
+## Order Details Storage
+
+After running the script **or** the GitHub Actions workflow successfully, the order details are saved in the `./data` directory located at the root of the project. The JSON files follow the `{SYMBOL}-{CURRENCY}-orders.json` naming pattern.
+
+**Example File Path:**
+
+-   `./data/BTC-BRL-orders.json`  
+    [View Example File](./data/BTC-BRL-orders.json)
+
+> **Note:** The `./data` directory and corresponding JSON files are generated whenever the script runs successfully, either manually or through the GitHub Actions workflow. When using the workflow, the JSON files are also committed and pushed to the remote repository.
+
+**Example Order Detail JSON Structure:**
+
+```json
+{
+    "symbol": "BTC",
+    "currency": "BRL",
+    "cost": 100,
+    "order_id": "1234567890",
+    "timestamp": "2024-12-01T07:15:00Z",
+    "status": "completed"
+}
+```
+
+This structure helps in organizing and easily locating your investment records based on the cryptocurrency symbol and the currency used for the investment.
 
 ## Automation with GitHub Actions
 
