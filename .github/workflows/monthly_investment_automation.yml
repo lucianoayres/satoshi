@@ -49,3 +49,7 @@ jobs:
                     git push origin main
                   else
                     echo "JSON file $file_path not found. No changes to commit."
+              env:
+                  SYMBOL: ${{ vars.SYMBOL }}
+                  CURRENCY: ${{ vars.CURRENCY }}
+                  COST: ${{ vars.COST }}
