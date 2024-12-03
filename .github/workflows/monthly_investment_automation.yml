@@ -40,11 +40,8 @@ jobs:
               run: |
                   git config user.name "github-actions[bot]"
                   git config user.email "github-actions[bot]@users.noreply.github.com"
-
                   file_name="${{ vars.SYMBOL }}-${{ vars.CURRENCY }}-orders.json"
                   file_path="./data/$file_name"
-
-                  # Check if the file exists before adding it to the repository
                   if [ -f "$file_path" ]; then
                     echo "Found $file_path. Adding to git."
                     git add "$file_path"
