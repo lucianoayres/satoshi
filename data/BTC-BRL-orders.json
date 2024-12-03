@@ -1,0 +1,15 @@
+[
+    {
+        "date": "2024-12-03 18:13",
+        "order_id": "01JE6VM9CBNZ6YCPKW5XSK45MN",
+        "order_execution_id": "28133877",
+        "coin": "BTC",
+        "type": "market",
+        "price_per_unit": 582530.79,
+        "currency": "BRL",
+        "cost": 1,
+        "fee_rate_percent": 0.7,
+        "fee": "0.00000001",
+        "quantity": "0.00000171"
+    }
+]
