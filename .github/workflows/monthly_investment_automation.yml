@@ -10,19 +10,23 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
+
             - name: Set up Python environment
               uses: actions/setup-python@v4
               with:
                   python-version: "3.x"
                   cache: "pip"
                   cache-dependency-path: requirements.txt
+
             - name: Install dependencies
               run: |
                   pip install -r requirements.txt
+
             - name: Set up environment variables
               run: |
                   echo "MERCADO_BITCOIN_API_ID=${{ secrets.MERCADO_BITCOIN_API_ID }}" >> $GITHUB_ENV
                   echo "MERCADO_BITCOIN_API_SECRET=${{ secrets.MERCADO_BITCOIN_API_SECRET }}" >> $GITHUB_ENV
+
             - name: Run the script
               run: |
                   python ./src/main.py $SYMBOL $CURRENCY $COST
@@ -30,3 +34,25 @@ jobs:
                   SYMBOL: ${{ vars.SYMBOL }}
                   CURRENCY: ${{ vars.CURRENCY }}
                   COST: ${{ vars.COST }}
+
+            - name: Commit and Push JSON File
+              if: success()
+              env:
+                  SYMBOL: ${{ vars.SYMBOL }}
+                  CURRENCY: ${{ vars.CURRENCY }}
+                  COST: ${{ vars.COST }}
+              run: |
+                  git config user.name "github-actions[bot]"
+                  git config user.email "github-actions[bot]@users.noreply.github.com"
+
+                  file_name="${SYMBOL}-${CURRENCY}-orders.json"
+                  file_path="./data/$file_name"
+
+                  # Check if the file exists before adding it to the repository
+                  if [ -f "$file_path" ]; then
+                    echo "Found $file_path. Adding to git."
+                    git add "$file_path"
+                    git commit -m "Add order details for ${SYMBOL}-${CURRENCY}"
+                    git push origin main
+                  else
+                    echo "JSON file $file_path not found. No changes to commit."
