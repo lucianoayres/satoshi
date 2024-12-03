@@ -19,7 +19,6 @@ def authenticate(tapi_id, tapi_secret):
     if response.status_code == 200:
         auth_data = response.json()
         access_token = auth_data['access_token']
-        print('Access token generated successfully')
         return access_token
     else:
         print('Failed to obtain access token:', response.status_code, response.text)
