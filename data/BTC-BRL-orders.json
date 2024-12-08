@@ -24,5 +24,18 @@
         "fee_rate_percent": 0.7,
         "fee": "0.00000001",
         "quantity": "0.00000162"
+    },
+    {
+        "date": "2024-12-08 17:11",
+        "order_id": "01JEKM3BKDTFGHBM8YF4JNJ1G6",
+        "order_execution_id": "28729807",
+        "coin": "BTC",
+        "type": "market",
+        "price_per_unit": 613297.27,
+        "currency": "BRL",
+        "cost": 1,
+        "fee_rate_percent": 0.7,
+        "fee": "0.00000001",
+        "quantity": "0.00000163"
     }
 ]
