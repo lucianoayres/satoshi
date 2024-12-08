@@ -2,45 +2,38 @@ name: Automated Monthly Investment
 
 on:
     schedule:
-        - cron: "15 7 1 * *" # Runs monthly at 7:15 AM UTC on the 1st
+        - cron: "45 6 1 * *" # Runs monthly at 6:45 AM UTC on the 1st
     workflow_dispatch:
 
 jobs:
-    run_script:
+    investment:
         runs-on: ubuntu-latest
+        env:
+          MERCADO_BITCOIN_API_ID: ${{ secrets.MERCADO_BITCOIN_API_ID }}
+          MERCADO_BITCOIN_API_SECRET: ${{ secrets.MERCADO_BITCOIN_API_SECRET }}
+          SYMBOL: ${{ vars.SYMBOL }}
+          CURRENCY: ${{ vars.CURRENCY }}
+          COST: ${{ vars.COST }}
         steps:
+            - name: Checkout Repository
             - uses: actions/checkout@v4
 
-            - name: Set up Python environment
+            - name: Set Up Python Environment
               uses: actions/setup-python@v4
               with:
-                  python-version: "3.x"
+                  python-version: "3.10"
                   cache: "pip"
-                  cache-dependency-path: requirements.txt
 
-            - name: Install dependencies
+            - name: Install Dependencies
               run: |
-                  pip install -r requirements.txt
+                  pip install --upgrade pip && -r requirements.txt
 
-            - name: Set up environment variables
-              run: |
-                  echo "MERCADO_BITCOIN_API_ID=${{ secrets.MERCADO_BITCOIN_API_ID }}" >> $GITHUB_ENV
-                  echo "MERCADO_BITCOIN_API_SECRET=${{ secrets.MERCADO_BITCOIN_API_SECRET }}" >> $GITHUB_ENV
-
-            - name: Run the script
+            - name: Run Investment Script
               run: |
                   python ./src/main.py $SYMBOL $CURRENCY $COST
-              env:
-                  SYMBOL: ${{ vars.SYMBOL }}
-                  CURRENCY: ${{ vars.CURRENCY }}
-                  COST: ${{ vars.COST }}
 
             - name: Commit and Push JSON File
               if: success()
-              env:
-                  SYMBOL: ${{ vars.SYMBOL }}
-                  CURRENCY: ${{ vars.CURRENCY }}
-                  COST: ${{ vars.COST }}
               run: |
                   git config user.name "github-actions[bot]"
                   git config user.email "github-actions[bot]@users.noreply.github.com"
