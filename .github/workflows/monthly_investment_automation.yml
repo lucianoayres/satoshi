@@ -15,7 +15,8 @@ jobs:
           CURRENCY: ${{ vars.CURRENCY }}
           COST: ${{ vars.COST }}
         steps:
-            - uses: actions/checkout@v4
+            - name: Checkout Repository 
+              uses: actions/checkout@v4
 
             - name: Set Up Python Environment
               uses: actions/setup-python@v4
